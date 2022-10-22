@@ -9,18 +9,28 @@ namespace SWT_Assignment_2.Interfaces
     public class Display: IDisplay
     {
 
-        private string programMessage;
-        private string stationMessage;
-        private string chargingMessage;
+        public string programMessage;
+        public string stationMessage;
+        public string chargingMessage;
 
+        private readonly IDisplay display;
 
         public Display()
         {
             programMessage = "Started";
             stationMessage = "init";
             chargingMessage = "none";
+        }
+        public Display(IDisplay display_)
+        {
+            display = display_;
             updateDisplay();
         }
+
+
+
+        public void Writeline(string text) => Console.WriteLine(text);
+        public void Writeline() => Console.WriteLine();
 
         public void displayProgramMessage(string val)
         {
@@ -42,10 +52,12 @@ namespace SWT_Assignment_2.Interfaces
 
         public void updateDisplay()
         {
-            Console.WriteLine("Station message : ",stationMessage);
-            Console.WriteLine("Charger message : ",chargingMessage);
-            Console.WriteLine();
-            Console.WriteLine("Program message : ", programMessage);
+            Console.Clear();
+           Writeline($"Station message : {stationMessage}");
+          Writeline($"Charger message : {chargingMessage}");
+            //Console.WriteLine();
+
+          Writeline($"Program message : {programMessage}");
         }
     }
 }

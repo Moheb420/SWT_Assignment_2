@@ -9,14 +9,8 @@ namespace SWT_Assignment_2
 {
     public class RfidReader:IRFiDReader
     {
-        public void OnRfidRead(int id)
-        {
-            throw new NotImplementedException();
-        }
+        public event EventHandler<RfidDetectEvent>? RfidDetectEvent;
+        public void OnRfidRead(int id) => RfidDetectEvent?.Invoke(this, new RfidDetectEvent{RfId = id});
 
-        public void RfidDetected(int id)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

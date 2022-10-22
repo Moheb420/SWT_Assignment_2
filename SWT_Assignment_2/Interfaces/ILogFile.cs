@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace SWT_Assignment_2.Interfaces
 {
-    internal interface ILogFile
+    public interface ILogFile
     {
+        void log(string writeToLogFile);
     }
 }

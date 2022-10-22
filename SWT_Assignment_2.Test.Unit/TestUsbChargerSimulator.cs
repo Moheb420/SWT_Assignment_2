@@ -5,8 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using UsbSimulator;
 
-namespace UsbSimulator.Test
+
+namespace SWT_Assignment_2.Test.Unit
 {
     [TestFixture]
     public class TestUsbChargerSimulator

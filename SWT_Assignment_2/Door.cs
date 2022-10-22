@@ -12,31 +12,48 @@ namespace SWT_Assignment_2
       
         IStationControl _StationControl;
 
-        //public Door( IStationControl stationControl)
-        //{
-        //    _StationControl = stationControl;
-        //}
+        private bool isOpen;
+        public bool isLocked;
+
+
+        public event EventHandler<DoorEventArg>? DoorEvent_;
+
         public void UnlockDoor()
         {
-            throw new NotImplementedException();
+            if (!isOpen)
+                isLocked = false;
         }
 
         public void LockDoor()
         {
-            throw new NotImplementedException();
+            if (!isOpen)
+                isLocked = true;
         }
 
         public void OnDoorOpen()
         {
-            Console.WriteLine("Door is opened");
-           
+            if (!isLocked && !isOpen)
+            {
+                isOpen = true;
+                DoorEvent(isOpen);
+            }
 
-            
         }
 
         public void OnDoorClose()
         {
-            throw new NotImplementedException();
+            if (isOpen)
+            {
+                isOpen = false;
+                DoorEvent(isOpen);
+            }
         }
+
+
+
+        private void DoorEvent(bool argEventVal) => DoorEvent_?
+            .Invoke(this, new DoorEventArg() { DoorOpen = argEventVal });
+
+        
     }
 }

@@ -7,19 +7,29 @@ using SWT_Assignment_2.Interfaces;
 
 namespace SWT_Assignment_2
 {
-    public class ChargeControl:IChargeControl
+    public class ChargeControl : IChargeControl
     {
-        public bool Connected { get; }
+        private readonly IUsbCharger _usbCharger;
+        public readonly IDisplay _display;
 
-        public bool Connected_()
+
+        public ChargeControl(IUsbCharger usbCharger, IDisplay display)
         {
-            //throw new NotImplementedException();
-            return true;
+            _usbCharger = usbCharger;
+            _display = display;
+        }
+        public bool IsConnected()
+        {
+            throw new NotImplementedException();
         }
 
-        public void readyToCharge()
+        public void StartCharge()
         {
-            // call stop and start charge
+            throw new NotImplementedException();
+        }
+
+        public void StopCharge()
+        {
             throw new NotImplementedException();
         }
     }

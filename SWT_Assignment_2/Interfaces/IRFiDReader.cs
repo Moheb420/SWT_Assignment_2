@@ -6,10 +6,17 @@ using System.Threading.Tasks;
 
 namespace SWT_Assignment_2.Interfaces
 {
+
+
+  
     public interface IRFiDReader
     {
+        event EventHandler<RfidDetectEvent> RfidDetectEvent; 
         public void OnRfidRead(int id);
+    }
 
-        public void RfidDetected(int id);
+    public class RfidDetectEvent : EventArgs
+    {
+        public int RfId { set; get; }
     }
 }
