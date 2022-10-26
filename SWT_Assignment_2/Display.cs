@@ -24,7 +24,7 @@ namespace SWT_Assignment_2.Interfaces
         public Display(IDisplay display_)
         {
             display = display_;
-            updateDisplay();
+            //updateDisplay();
         }
 
 
@@ -52,7 +52,7 @@ namespace SWT_Assignment_2.Interfaces
 
         public void updateDisplay()
         {
-            Console.Clear();
+            //Console.Clear();
            Writeline($"Station message : {stationMessage}");
           Writeline($"Charger message : {chargingMessage}");
             //Console.WriteLine();
