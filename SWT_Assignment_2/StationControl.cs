@@ -62,6 +62,7 @@ namespace Ladeskab
                         _door.LockDoor();
                         _charger.StartCharge();
                         _oldId = id;
+
                         if (!File.Exists(logFile))
                          File.CreateText(logFile);
 
@@ -112,7 +113,7 @@ namespace Ladeskab
 
         public event EventHandler<CurrentConnectionArg>? CurrentConnectionVal;
         private void DoorConnection(bool argEventVal) => CurrentConnectionVal?
-            .Invoke(this, new CurrentConnectionArg() {   });
-        
+            .Invoke(this, new CurrentConnectionArg() { });
+
     }
 }

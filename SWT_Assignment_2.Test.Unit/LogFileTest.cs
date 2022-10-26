@@ -11,7 +11,7 @@ namespace SWT_Assignment_2.Test.Unit
     [TestFixture]
     public class LogFileTest
     {
-        private string FileNameTest = "logtest";
+        private string FileNameTest = "logfile.txt";
         private LogFile _uut;
 
         [SetUp]
@@ -37,49 +37,51 @@ namespace SWT_Assignment_2.Test.Unit
         }
 
 
-        //[TestCase("test")]
-        ////[TestCase(null)]
-        ////[TestCase("")]
-        //public void WriteToLogFile(string text)
-        //{
-        //    string result;
-        //    DateTime dt = DateTime.Now;
-        //    _uut.log(text);
-        //     //Assert.That(File.Exists(FileNameTest));
+        [TestCase("test")]
+        [TestCase(null)]
+        [TestCase("")]
+        public void WriteToLogFile(string text)
+        {
+            
+            File.WriteAllText(FileNameTest,string.Empty);
+            DateTime dt = DateTime.Now;
+            _uut.log(text);
+            Assert.That(File.Exists(FileNameTest));
+            string result;
+            using (StreamReader sr = new StreamReader(File.OpenRead(FileNameTest)))
+            {
+                result = sr.ReadLine();
+            }
+            Assert.That(result == $"{dt}: {text}");
+        }
 
-        //    using (StreamReader sr = new StreamReader(File.OpenRead(FileNameTest)))
-        //    {
-        //        result = sr.ReadLine();
-        //    }
-        //    Assert.That(result == $"{dt}: {text}");
-        //}
 
+        [TestCase("hello", "its me", "who?")]
+        [TestCase(null, "Arhus", "University")]
+        public void WriteToLogFile(string param1, string param2, string param3)
+        {
 
-        //[TestCase("hello", "its me","who?")]
-        //[TestCase(null,"Arhus", "University")]
-        //public void WriteToLogFile(string param1,string param2, string param3)
-        //{
-        //    DateTime dt = DateTime.Now;
-        //    string result;
-        //    _uut.log(param1);
+            File.WriteAllText(FileNameTest, string.Empty);
+            DateTime dt = DateTime.Now;
+            string result;
+            _uut.log(param1);
+            _uut.log(param2);
 
-        //    _uut.log(param2);
+            _uut.log(param3);
+            Assert.That(File.Exists(FileNameTest));
 
-        //    _uut.log(param3);
-        //    Assert.That(File.Exists(FileNameTest));
+            using (StreamReader sr = new StreamReader(File.OpenRead(FileNameTest)))
+            {
+                result = sr.ReadLine();
+                Assert.That(result == $"{dt}: {param1}");
 
-        //    using (StreamReader sr = new StreamReader(File.OpenRead(FileNameTest)))
-        //    {
-        //        result = sr.ReadLine();
-        //        Assert.That(result == $"{dt}: {param1}");
+                result = sr.ReadLine();
+                Assert.That(result == $"{dt}: {param2}");
 
-        //        result = sr.ReadLine();
-        //        Assert.That(result == $"{dt}: {param2}");
-
-        //        result = sr.ReadLine();
-        //        Assert.That(result == $"{dt}: {param3}");
-        //    }
-        //}
+                result = sr.ReadLine();
+                Assert.That(result == $"{dt}: {param3}");
+            }
+        }
 
     }
 }

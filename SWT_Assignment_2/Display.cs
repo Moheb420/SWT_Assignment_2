@@ -13,7 +13,7 @@ namespace SWT_Assignment_2.Interfaces
         public string stationMessage;
         public string chargingMessage;
 
-        private readonly IDisplay display;
+        private  IDisplay display;
 
         public Display()
         {

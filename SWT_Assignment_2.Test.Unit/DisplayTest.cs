@@ -63,7 +63,7 @@ namespace SWT_Assignment_2.Test.Unit
         {
 
            _uut.displayStationMessage(test);
-            string mytext = _uut.programMessage;
+            string mytext = _uut.stationMessage;
             Assert.AreEqual(mytext, test);
 
             _uut.Writeline(ProgramMessageinit);
@@ -85,7 +85,7 @@ namespace SWT_Assignment_2.Test.Unit
         public void DisplayChargerMessage(string test)
         {
             _uut.displayChargingMessage(test);
-            string mytext = _uut.programMessage;
+            string mytext = _uut.chargingMessage;
             Assert.AreEqual(mytext, test);
 
             _uut.Writeline(ProgramMessageinit);

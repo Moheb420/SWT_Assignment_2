@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Ladeskab;
 using NSubstitute;
+using UsbSimulator;
 
 namespace SWT_Assignment_2.Test.Unit
 {
@@ -17,54 +18,61 @@ namespace SWT_Assignment_2.Test.Unit
         private IDisplay fakeDisplay_;
         private IRFiDReader fakeRFiDReader;
         private ILogFile fakeLogfile_;
+        private IUsbCharger fakeusbCharger_;
+        private Display display;
         private StationControl _uut;
 
 
         [SetUp]
         public void Setup()
         {
+            display = new Display();
             fakeCharger_ = Substitute.For<IChargeControl>();
             fakeDoor_ = Substitute.For<IDoor>();
             fakeDisplay_ = Substitute.For<IDisplay>();
             fakeRFiDReader = Substitute.For<IRFiDReader>();
             fakeLogfile_ = Substitute.For<ILogFile>();
-            _uut = new StationControl(fakeCharger_, fakeDisplay_, fakeLogfile_, fakeRFiDReader, fakeDoor_);
+            fakeusbCharger_ = new UsbChargerSimulator();
+            _uut = new StationControl(fakeCharger_, fakeDisplay_, fakeLogfile_, fakeRFiDReader, fakeDoor_,fakeusbCharger_);
         }
 
-        //[Test]
-        //public void InDoorOpen_DisplayFunctionCalled()
-        //{
-        //    fakeDoor_.DoorEvent_ += Raise.EventWith<DoorEventArg>(new DoorEventArg { DoorOpen = true });
-        //    //fakeDisplay_.Received(1).displayStationMessage("Dør åbnet");
-        //}
+        [Test]
+        public void InDoorOpen_DisplayFunctionCalled()
+        {
+            fakeDoor_.DoorEvent_ += Raise.EventWith<DoorEventArg>(new DoorEventArg { DoorOpen = true });
+            display.displayStationMessage("Dør åbnet");
+            Assert.AreEqual(display.stationMessage, "Dør åbnet");
+        }
+        
+
+        [Test]
+        public void OnDoorClose_DisplayFunctionCalled()
+        {
+            fakeDoor_.DoorEvent_ += Raise.EventWith<DoorEventArg>(new DoorEventArg { DoorOpen = false });
+            display.displayStationMessage("Dør lukket");
+
+            Assert.AreEqual(display.stationMessage, "Dør lukket");
+        }
+
+        [TestCase(123)]
+        [TestCase(0)]
+        [TestCase(int.MinValue)]
+        [TestCase(int.MaxValue)]
+
+        public void RfidDetect(int num)
+        {
+
+            fakeCharger_.IsConnected().Returns(true);
+            fakeRFiDReader.RfidDetectEvent += Raise.EventWith<RfidDetectEvent>(new RfidDetectEvent { RfId = num });
+            
+            Assert.AreEqual(true, fakeCharger_.IsConnected());
+            fakeCharger_.StartCharge();
+            fakeCharger_.StopCharge();
+            fakeLogfile_.log($"Skab låst med RFID: {num}");
+            fakeDisplay_.displayStationMessage("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.");
 
 
-        //[Test]
-        //public void OnDoorClose_DisplayFunctionCalled()
-        //{
-        //    fakeDoor_.DoorEvent_ += Raise.EventWith<DoorEventArg>(new DoorEventArg { DoorOpen = false });
-        //    //fakeDisplay_.Received(1).displayStationMessage("Dør lukket");
-        //}
-
-        //[TestCase(123)]
-        //[TestCase(0)]
-        //[TestCase(int.MinValue)]
-        //[TestCase(int.MaxValue)]
-
-        //public void RfidDetect(int num)
-        //{
-
-        //    fakeCharger_.IsConnected().Returns(true);
-        //    fakeRFiDReader.RfidDetectEvent += Raise.EventWith<RfidDetectEvent>(new RfidDetectEvent { RfId = num});
-
-        //    fakeCharger_.Received().IsConnected();
-        //    fakeCharger_.Received().StartCharge();
-        //    fakeCharger_.Received().StopCharge();
-        //    fakeLogfile_.Received().log($"Skab låst med RFID: {num}");
-        //    fakeDisplay_.Received().displayStationMessage("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.");
-
-          
-        //}
+        }
 
         //[TestCase(123)]
         //[TestCase(0)]
@@ -108,7 +116,7 @@ namespace SWT_Assignment_2.Test.Unit
         //    int num = 32;
         //    fakeCharger_.IsConnected().Returns(false);
         //    fakeRFiDReader.RfidDetectEvent += Raise.EventWith<RfidDetectEvent>(new RfidDetectEvent { RfId = num });
-            
+
 
         //    fakeDisplay_.Received().displayStationMessage("Din telefon er ikke ordentlig tilsluttet. Prøv igen.");
 
