@@ -6,6 +6,7 @@ namespace UsbSimulator
 {
     public class UsbChargerSimulator : IUsbCharger
     {
+        private IDisplay display = new Display();
         // Constants
         private const double MaxCurrent = 500.0; // mA
         private const double FullyChargedCurrent = 2.5; // mA
@@ -78,6 +79,8 @@ namespace UsbSimulator
             {
                 if (Connected && !_overload)
                 {
+
+                    display.displayChargingMessage("Charging");
                     CurrentValue = 500;
                 }
                 else if (Connected && _overload)

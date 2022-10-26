@@ -30,7 +30,6 @@ namespace SWT_Assignment_2.Interfaces
 
 
         public void Writeline(string text) => Console.WriteLine(text);
-        public void Writeline() => Console.WriteLine();
 
         public void displayProgramMessage(string val)
         {
@@ -48,6 +47,12 @@ namespace SWT_Assignment_2.Interfaces
         {
             chargingMessage = val;
             updateDisplay();
+        }
+
+        public void displayConenctPhone()
+        {
+
+            Console.WriteLine("Connect your phone please!");
         }
 
         public void updateDisplay()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ladeskab;
 using SWT_Assignment_2.Interfaces;
 
 namespace SWT_Assignment_2
@@ -10,7 +11,7 @@ namespace SWT_Assignment_2
     public class Door:IDoor
     {
       
-        IStationControl _StationControl;
+        Display display = new Display();
 
         private bool isOpen;
         public bool isLocked;
@@ -36,6 +37,8 @@ namespace SWT_Assignment_2
             {
                 isOpen = true;
                 DoorEvent(isOpen);
+                display.displayConenctPhone();
+                
             }
 
         }
@@ -46,6 +49,10 @@ namespace SWT_Assignment_2
             {
                 isOpen = false;
                 DoorEvent(isOpen);
+                 Console.WriteLine("Enter id for rfid");
+                //int id =  Convert.ToInt32(Console.ReadLine());
+                //if(id != null)
+                //_StationControl.RfidDetected(id);
             }
         }
 

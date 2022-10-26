@@ -6,8 +6,18 @@ using System.Threading.Tasks;
 
 namespace SWT_Assignment_2.Interfaces
 {
-    public interface IStationControl
+    public class CurrentConnectionArg : EventArgs
     {
-    private void RfidDetected(int id){}
+        // Value in mA (milliAmpere)
+        public double Current { set; get; }
+    }
+
+    
+        public interface IStationControl
+    {
+
+        // Event triggered on new current value
+        event EventHandler<CurrentConnectionArg> CurrentConnectionVal;
+        private void RfidDetected(int id){}
     }
 }

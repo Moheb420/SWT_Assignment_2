@@ -20,17 +20,17 @@ namespace SWT_Assignment_2
         }
         public bool IsConnected()
         {
-            throw new NotImplementedException();
+            return _usbCharger.Connected;
         }
 
         public void StartCharge()
         {
-            throw new NotImplementedException();
+            _usbCharger.StartCharge();
         }
 
         public void StopCharge()
         {
-            throw new NotImplementedException();
+            _usbCharger.StopCharge();
         }
     }
 }

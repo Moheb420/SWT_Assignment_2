@@ -17,7 +17,7 @@ namespace SWT_Assignment_2.Interfaces
         double CurrentValue { get; }
 
         // Require connection status of the phone
-        bool Connected { get; }
+        bool Connected { get;  }
 
         // Start charging
         void StartCharge();

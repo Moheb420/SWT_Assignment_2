@@ -5,7 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using SWT_Assignment_2;
 using SWT_Assignment_2.Interfaces;
+using UsbSimulator;
 
 namespace Ladeskab
 {
@@ -25,37 +27,45 @@ namespace Ladeskab
         private IUsbCharger usbCharger;
         private int _oldId;
         private IDoor _door;
-        private IDisplay display_;
+        public IDisplay display_;
         private IRFiDReader rfiDReader_;
         private ILogFile logfile_;
+        private Display disp = new Display();
+    
+        private string logFile = "./logfile.txt"; // Navnet på systemets log-fil
 
-        private string logFile = "logfile.txt"; // Navnet på systemets log-fil
-
-
+        public StationControl()
+        {
+            
+        }
         // Her mangler constructor
-        public StationControl(IChargeControl chargeControl, IDisplay chargerDisplay, ILogFile logfile, IRFiDReader rFiDReader, IDoor door)
+        public StationControl(IChargeControl chargeControl, IDisplay chargerDisplay, ILogFile logfile, IRFiDReader rFiDReader, IDoor door, IUsbCharger usbCharger_)
         {
             _charger = chargeControl;
             display_ = chargerDisplay;
             logfile_ = logfile;
             rfiDReader_ = rFiDReader;
             _door = door;
+            usbCharger = usbCharger_;
         }
 
         // Eksempel på event handler for eventet "RFID Detected" fra tilstandsdiagrammet for klassen
-        private void RfidDetected(int id)
+        public void RfidDetected(int id)
         {
             switch (_state)
             {
                 case LadeskabState.Available:
                     // Check for ladeforbindelse
-                    if (usbCharger.Connected)
+                    if (_charger.IsConnected())
                     {
                         
                         _door.LockDoor();
-                        usbCharger.StartCharge();
+                        _charger.StartCharge();
                         _oldId = id;
-                        using (var writer = File.AppendText(logFile))
+                        if (!File.Exists(logFile))
+                         File.CreateText(logFile);
+
+                            using (var writer = File.AppendText(logFile))
                         {
                             writer.WriteLine(DateTime.Now + ": Skab låst med RFID: {0}", id);
                         }
@@ -78,7 +88,7 @@ namespace Ladeskab
                     // Check for correct ID
                     if (id == _oldId)
                     {
-                        usbCharger.StopCharge();
+                        _charger.StopCharge();
                         _door.UnlockDoor();
                         using (var writer = File.AppendText(logFile))
                         {
@@ -98,8 +108,11 @@ namespace Ladeskab
         }
 
         // Her mangler de andre trigger handlere
-        public void printConnectPhone()
-        {
-        }
+
+
+        public event EventHandler<CurrentConnectionArg>? CurrentConnectionVal;
+        private void DoorConnection(bool argEventVal) => CurrentConnectionVal?
+            .Invoke(this, new CurrentConnectionArg() {   });
+        
     }
 }
