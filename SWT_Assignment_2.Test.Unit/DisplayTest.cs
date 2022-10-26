@@ -55,37 +55,47 @@ namespace SWT_Assignment_2.Test.Unit
         }
 
 
-        //[TestCase("test")]
-        //[TestCase(null)]
-        //[TestCase("")]
+        [TestCase("test")]
+        [TestCase(null)]
+        [TestCase("")]
 
-        //public void DisplayStationMessage(string test)
-        //{
+        public void DisplayStationMessage(string test)
+        {
 
-        //    _uut.displayStationMessage(test);
-        //    string mytext = _uut.stationMessage;
-        //    Assert.AreEqual(mytext, test);
+           _uut.displayStationMessage(test);
+            string mytext = _uut.programMessage;
+            Assert.AreEqual(mytext, test);
 
-        //    fakeDisplay.Writeline(ProgramMessageinit);
-        //    fakeDisplay.Writeline(StationMsg + StationMessageInit);
-        //    fakeDisplay.Writeline(ChargerMsg + chargerMessageInit);
-        //}
+            _uut.Writeline(ProgramMessageinit);
+            Assert.AreEqual("Started",ProgramMessageinit);
+
+            _uut.Writeline(StationMsg + StationMessageInit);
+            Assert.AreEqual("Station message : init", StationMsg + StationMessageInit);
+
+            _uut.Writeline(ChargerMsg + chargerMessageInit);
+            Assert.AreEqual("Charger message : none", ChargerMsg + chargerMessageInit);
+        }
 
 
 
-        //[TestCase("test")]
-        //[TestCase(null)]
-        //[TestCase("")]
+        [TestCase("test")]
+        [TestCase(null)]
+        [TestCase("")]
 
-        //public void DisplayChargerMessage(string test)
-        //{
-        //    _uut.displayChargingMessage(test);
-        //    string mytext = _uut.chargingMessage;
-        //    Assert.AreEqual(mytext, test);
+        public void DisplayChargerMessage(string test)
+        {
+            _uut.displayChargingMessage(test);
+            string mytext = _uut.programMessage;
+            Assert.AreEqual(mytext, test);
 
-        //    fakeDisplay.Writeline(ProgramMessageinit);
-        //    fakeDisplay.Writeline(StationMsg + StationMessageInit);
-        //    fakeDisplay.Writeline(ChargerMsg + chargerMessageInit);
-        //}
+            _uut.Writeline(ProgramMessageinit);
+            Assert.AreEqual("Started",ProgramMessageinit);
+
+            _uut.Writeline(StationMsg + StationMessageInit);
+            Assert.AreEqual("Station message : init", StationMsg + StationMessageInit);
+
+            _uut.Writeline(ChargerMsg + chargerMessageInit);
+            Assert.AreEqual("Charger message : none", ChargerMsg + chargerMessageInit);
+        }
     }
 }
