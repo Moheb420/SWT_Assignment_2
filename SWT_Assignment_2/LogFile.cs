@@ -19,8 +19,6 @@ namespace SWT_Assignment_2
         {
             using (var writer = File.AppendText(logFile_))
             {
-                //writer.WriteLine(DateTime.Now + writeToLogFile);
-
                 writer.WriteLine($"{DateTime.Now}: {writeToLogFile}");
             }
         }

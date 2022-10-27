@@ -96,6 +96,7 @@ namespace UsbSimulator
                 _ticksSinceStart = 0;
 
                 _charging = true;
+                display.displayChargingMessage("Phone is charging");
 
                 _timer.Start();
             }
@@ -109,6 +110,7 @@ namespace UsbSimulator
             OnNewCurrent();
 
             _charging = false;
+            display.displayChargingMessage("Charging stopped");
         }
 
         private void OnNewCurrent()

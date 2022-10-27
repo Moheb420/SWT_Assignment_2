@@ -12,7 +12,6 @@ namespace SWT_Assignment_2.Interfaces
 
 
         public void Writeline(string text);
-        //public void Writeline();
         void displayProgramMessage(string val);
         void displayStationMessage(string val);
         void displayChargingMessage(string val);

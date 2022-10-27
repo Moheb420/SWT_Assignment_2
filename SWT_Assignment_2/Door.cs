@@ -50,9 +50,6 @@ namespace SWT_Assignment_2
                 isOpen = false;
                 DoorEvent(isOpen);
                  Console.WriteLine("Enter id for rfid");
-                //int id =  Convert.ToInt32(Console.ReadLine());
-                //if(id != null)
-                //_StationControl.RfidDetected(id);
             }
         }
 

@@ -23,12 +23,12 @@ namespace SWT_Assignment_2
             return _usbCharger.Connected;
         }
 
-        public void StartCharge()
+        public void StartUSBCharge()
         {
             _usbCharger.StartCharge();
         }
 
-        public void StopCharge()
+        public void StopUSBCharge()
         {
             _usbCharger.StopCharge();
         }

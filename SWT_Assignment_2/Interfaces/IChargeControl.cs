@@ -9,7 +9,7 @@ namespace SWT_Assignment_2.Interfaces
     public interface IChargeControl
     {
         bool IsConnected();
-        void StartCharge();
-        void StopCharge();
+        void StartUSBCharge();
+        void StopUSBCharge();
     }
 }

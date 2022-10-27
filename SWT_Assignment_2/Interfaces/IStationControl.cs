@@ -18,6 +18,5 @@ namespace SWT_Assignment_2.Interfaces
 
         // Event triggered on new current value
         event EventHandler<CurrentConnectionArg> CurrentConnectionVal;
-        private void RfidDetected(int id){}
     }
 }

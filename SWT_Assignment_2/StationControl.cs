@@ -32,7 +32,7 @@ namespace Ladeskab
         private ILogFile logfile_;
         private Display disp = new Display();
     
-        private string logFile = "./logfile.txt"; // Navnet på systemets log-fil
+        private string logFile = "logfile.txt"; // Navnet på systemets log-fil
 
         public StationControl()
         {
@@ -60,7 +60,7 @@ namespace Ladeskab
                     {
                         
                         _door.LockDoor();
-                        _charger.StartCharge();
+                        _charger.StopUSBCharge();
                         _oldId = id;
 
                         if (!File.Exists(logFile))
@@ -89,7 +89,7 @@ namespace Ladeskab
                     // Check for correct ID
                     if (id == _oldId)
                     {
-                        _charger.StopCharge();
+                        _charger.StopUSBCharge();
                         _door.UnlockDoor();
                         using (var writer = File.AppendText(logFile))
                         {

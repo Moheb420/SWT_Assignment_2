@@ -66,8 +66,8 @@ namespace SWT_Assignment_2.Test.Unit
             fakeRFiDReader.RfidDetectEvent += Raise.EventWith<RfidDetectEvent>(new RfidDetectEvent { RfId = num });
             
             Assert.AreEqual(true, fakeCharger_.IsConnected());
-            fakeCharger_.StartCharge();
-            fakeCharger_.StopCharge();
+            fakeCharger_.StartUSBCharge();
+            fakeCharger_.StopUSBCharge();
             fakeLogfile_.log($"Skab låst med RFID: {num}");
             fakeDisplay_.displayStationMessage("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.");
 

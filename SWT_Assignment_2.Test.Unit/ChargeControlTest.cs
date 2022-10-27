@@ -30,14 +30,14 @@ namespace SWT_Assignment_2.Test.Unit
         [Test]
         public void startChargeUsB()
         {
-            _uut.StartCharge();
+            _uut.StartUSBCharge();
             _fakeUsbCharger.Received().StartCharge();
         }
 
         [Test]
         public void stopChargeUsB()
         {
-            _uut.StopCharge();
+            _uut.StopUSBCharge();
             _fakeUsbCharger.Received().StopCharge();
         }
 

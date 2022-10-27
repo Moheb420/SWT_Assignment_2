@@ -48,8 +48,6 @@ class Program
                     string idString = System.Console.ReadLine();
                     int id = Convert.ToInt32(idString);
                     //rfidReader.OnRfidRead(id);
-                    
-                    
                     stationControl.RfidDetected(id);
                     break;
 
