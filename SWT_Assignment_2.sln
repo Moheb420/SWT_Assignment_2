@@ -5,7 +5,9 @@ VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SWT_Assignment_2", "SWT_Assignment_2\SWT_Assignment_2.csproj", "{2B97DB2E-6C22-488F-B61B-40F5725F4260}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SWT_Assignment_2.Test.Unit", "SWT_Assignment_2.Test.Unit\SWT_Assignment_2.Test.Unit.csproj", "{9559A754-7A3A-417A-A09C-D661218ECDCC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SWT_Assignment_2.Test.Unit", "SWT_Assignment_2.Test.Unit\SWT_Assignment_2.Test.Unit.csproj", "{9559A754-7A3A-417A-A09C-D661218ECDCC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp", "ConsoleApp\ConsoleApp.csproj", "{EB8C65B7-1488-4FA9-96D8-B0E4763F0C70}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{9559A754-7A3A-417A-A09C-D661218ECDCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9559A754-7A3A-417A-A09C-D661218ECDCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9559A754-7A3A-417A-A09C-D661218ECDCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB8C65B7-1488-4FA9-96D8-B0E4763F0C70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB8C65B7-1488-4FA9-96D8-B0E4763F0C70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB8C65B7-1488-4FA9-96D8-B0E4763F0C70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB8C65B7-1488-4FA9-96D8-B0E4763F0C70}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
