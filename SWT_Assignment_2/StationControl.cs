@@ -34,10 +34,6 @@ namespace Ladeskab
 
         private string logFile = "logfile.txt"; // Navnet på systemets log-fil
 
-        public StationControl()
-        {
-
-        }
         // Her mangler constructor
         public StationControl(IChargeControl chargeControl, IDisplay chargerDisplay, ILogFile logfile, IRFiDReader rFiDReader, IDoor door, IUsbCharger usbCharger_)
         {
