@@ -11,7 +11,7 @@ using UsbSimulator;
 
 namespace Ladeskab
 {
-    public class StationControl:IStationControl
+    public class StationControl
     {
         // Enum med tilstande ("states") svarende til tilstandsdiagrammet for klassen
         private enum LadeskabState
@@ -31,12 +31,12 @@ namespace Ladeskab
         private IRFiDReader rfiDReader_;
         private ILogFile logfile_;
         private Display disp = new Display();
-    
+
         private string logFile = "logfile.txt"; // Navnet på systemets log-fil
 
         public StationControl()
         {
-            
+
         }
         // Her mangler constructor
         public StationControl(IChargeControl chargeControl, IDisplay chargerDisplay, ILogFile logfile, IRFiDReader rFiDReader, IDoor door, IUsbCharger usbCharger_)
@@ -58,15 +58,15 @@ namespace Ladeskab
                     // Check for ladeforbindelse
                     if (_charger.IsConnected())
                     {
-                        
+
                         _door.LockDoor();
                         _charger.StopUSBCharge();
                         _oldId = id;
 
                         if (!File.Exists(logFile))
-                         File.CreateText(logFile);
+                            File.CreateText(logFile);
 
-                            using (var writer = File.AppendText(logFile))
+                        using (var writer = File.AppendText(logFile))
                         {
                             writer.WriteLine(DateTime.Now + ": Skab låst med RFID: {0}", id);
                         }
@@ -107,13 +107,6 @@ namespace Ladeskab
                     break;
             }
         }
-
-        // Her mangler de andre trigger handlere
-
-
-        public event EventHandler<CurrentConnectionArg>? CurrentConnectionVal;
-        private void DoorConnection(bool argEventVal) => CurrentConnectionVal?
-            .Invoke(this, new CurrentConnectionArg() { });
 
     }
 }
