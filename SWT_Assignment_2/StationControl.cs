@@ -46,7 +46,13 @@ namespace Ladeskab
 
             rfiDReader_.RfidDetectEvent += HandleRfid;
             _door.DoorEvent_ += HandleDoor;
-            //Curent value of usb ?
+            //Curent value of usb 
+            usbCharger.CurrentValueEvent += CurrentEventValue;
+        }
+
+        private void CurrentEventValue(object? sender, CurrentEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void HandleRfid(object? sender, RfidDetectEvent e)
@@ -63,6 +69,7 @@ namespace Ladeskab
                 _state = LadeskabState.Locked;
             }
 
+
             if (e.RfId == _oldId)
             {
                 _charger.StopUSBCharge();
@@ -71,17 +78,14 @@ namespace Ladeskab
 
                 display_.displayStationMessage("Tag din telefon ud af skabet og luk døren");
             }
-            if (e.RfId != _oldId)
-            {
-                display_.displayStationMessage("Forkert RFID tag");
 
-            }
-
-            if (!_charger.IsConnected())
+           if (!_charger.IsConnected())
             {
                 display_.displayStationMessage("Din telefon er ikke ordentlig tilsluttet. Prøv igen.");
 
             }
+           else
+               display_.displayStationMessage("Forkert RFID tag");
         }
 
         private void HandleDoor(object? sender, DoorEventArg e)
@@ -118,9 +122,7 @@ namespace Ladeskab
                         _door.LockDoor();
                         _charger.StartUSBCharge();
                         _oldId = id;
-
                         logfile_.log($"Skab låst med RFID: {id}");
-
                         display_.Writeline("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.");
                         _state = LadeskabState.Locked;
                     }
@@ -150,7 +152,6 @@ namespace Ladeskab
                     {
                         display_.displayStationMessage("Forkert RFID tag");
                     }
-
                     break;
             }
         }
