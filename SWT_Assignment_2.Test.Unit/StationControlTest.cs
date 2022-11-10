@@ -108,23 +108,7 @@ namespace SWT_Assignment_2.Test.Unit
             fakeDisplay_.Received().displayStationMessage("Tag din telefon ud af skabet og luk døren");
         }
 
-        [TestCase(123)]
-        [TestCase(0)]
-        [TestCase(int.MinValue)]
-        [TestCase(int.MaxValue)]
-
-        public void RfidDetected(int num)
-        {
-
-            fakeCharger_.IsConnected().Returns(true);
-            fakeRFiDReader.RfidDetectEvent += Raise.EventWith<RfidDetectEvent>(new RfidDetectEvent { RfId = num });
-            fakeCharger_.IsConnected();
-            fakeCharger_.StartUSBCharge();
-            fakeCharger_.StopUSBCharge();
-            fakeLogfile_.log($"Skab låst med RFID: {num}");
-            fakeDisplay_.displayStationMessage("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.");
-        }
-
+      
         [TestCase(44, 18)]
         [TestCase(-2, 22)]
 
