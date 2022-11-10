@@ -32,28 +32,19 @@ namespace Ladeskab
         private IRFiDReader rfiDReader_;
         private ILogFile logfile_;
 
-        private string logFile = "logfile.txt"; // Navnet på systemets log-fil
-
         // Her mangler constructor
-        public StationControl(IChargeControl chargeControl, IDisplay chargerDisplay, ILogFile logfile, IRFiDReader rFiDReader, IDoor door, IUsbCharger usbCharger_)
+        public StationControl(IChargeControl chargeControl, IDisplay chargerDisplay, ILogFile logfile, IRFiDReader rFiDReader, IDoor door)
         {
             _charger = chargeControl;
             display_ = chargerDisplay;
             logfile_ = logfile;
             rfiDReader_ = rFiDReader;
             _door = door;
-            usbCharger = usbCharger_;
 
             rfiDReader_.RfidDetectEvent += HandleRfid;
             _door.DoorEvent_ += HandleDoor;
-            //Curent value of usb 
-            usbCharger.CurrentValueEvent += CurrentEventValue;
         }
 
-        private void CurrentEventValue(object? sender, CurrentEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
 
         private void HandleRfid(object? sender, RfidDetectEvent e)
         {
@@ -66,7 +57,7 @@ namespace Ladeskab
 
                 logfile_.log($"Skab låst med RFID: {e.RfId}");
                 display_.Writeline("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.");
-                _state = LadeskabState.Locked;
+                //_state = LadeskabState.Locked;
             }
 
 

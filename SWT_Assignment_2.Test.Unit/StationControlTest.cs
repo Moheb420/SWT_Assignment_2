@@ -30,8 +30,7 @@ namespace SWT_Assignment_2.Test.Unit
             fakeDisplay_ = Substitute.For<IDisplay>();
             fakeRFiDReader = Substitute.For<IRFiDReader>();
             fakeLogfile_ = Substitute.For<ILogFile>();
-            fakeusbCharger_ = new UsbChargerSimulator();
-            _uut = new StationControl(fakeCharger_, fakeDisplay_, fakeLogfile_, fakeRFiDReader, fakeDoor_, fakeusbCharger_);
+            _uut = new StationControl(fakeCharger_, fakeDisplay_, fakeLogfile_, fakeRFiDReader, fakeDoor_);
         }
 
         [Test]
