@@ -113,7 +113,7 @@ namespace Ladeskab
 
                         logfile_.log($"Skab låst med RFID: {id}");
 
-                    display_.Writeline("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.");
+                        display_.Writeline("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.");
                         _state = LadeskabState.Locked;
                     }
                     else
@@ -124,7 +124,7 @@ namespace Ladeskab
                     break;
 
                 case LadeskabState.DoorOpen:
-                    // Ignore
+                    display_.displayStationMessage("Dør åbnet"); 
 
                     break;
 
