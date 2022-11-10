@@ -71,6 +71,11 @@ namespace Ladeskab
 
                 display_.displayStationMessage("Tag din telefon ud af skabet og luk døren");
             }
+            if (e.RfId != _oldId)
+            {
+                display_.displayStationMessage("Forkert RFID tag");
+
+            }
 
             if (!_charger.IsConnected())
             {
@@ -143,7 +148,7 @@ namespace Ladeskab
                     }
                     else
                     {
-                        display_.Writeline("Forkert RFID tag");
+                        display_.displayStationMessage("Forkert RFID tag");
                     }
 
                     break;

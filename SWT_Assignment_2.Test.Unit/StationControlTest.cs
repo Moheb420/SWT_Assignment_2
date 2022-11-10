@@ -120,7 +120,7 @@ namespace SWT_Assignment_2.Test.Unit
 
             fakeRFiDReader.RfidDetectEvent += Raise.EventWith<RfidDetectEvent>(new RfidDetectEvent { RfId = num2 });
 
-            fakeDisplay_.displayStationMessage("Forkert RFID tag");
+            fakeDisplay_.Received().displayStationMessage("Forkert RFID tag");
 
         }
     }
