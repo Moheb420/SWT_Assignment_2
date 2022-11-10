@@ -83,47 +83,7 @@ namespace Ladeskab
                     
             }
         }
-
-
-
-            rfiDReader_.RfidDetectEvent += HandleRfid;
-            _door.DoorEvent_ += HandleDoor;
-        }
-
-        private void HandleDoor(object? sender, DoorEventArg e)
-        {
-            switch (_state)
-            {
-                case LadeskabState.Available:
-                    // Check for ladeforbindelse
-                    if (e.DoorOpen == true)
-                    {
-                        _state = LadeskabState.DoorOpen;
-                        display_.displayConenctPhone();
-                    }
-                    if (e.DoorOpen == false)
-                    {
-                        _state = LadeskabState.Locked;
-                        display_.displayStationMessage("Døren er lukket");
-                    }
-                    break;
-                    
-            }
-        }
-
-        private void HandleRfid(object? sender, RfidDetectEvent e)
-        {
-            if (_charger.IsConnected()){
-                _door.LockDoor();
-                _charger.StartUSBCharge();
-                _oldId = e.RfId;
-
-                logfile_.log($"Skab låst med RFID: {e.RfId}");
-                display_.Writeline("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.");
-                _state = LadeskabState.Locked;
-            }
-        }
-
+        
         // Eksempel på event handler for eventet "RFID Detected" fra tilstandsdiagrammet for klassen
         public void RfidDetected(int id)
         {
