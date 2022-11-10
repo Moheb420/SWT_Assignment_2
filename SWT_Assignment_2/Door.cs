@@ -49,7 +49,7 @@ namespace SWT_Assignment_2
             {
                 isOpen = false;
                 DoorEvent(isOpen);
-                 Console.WriteLine("Enter id for rfid");
+                 display.Writeline("Enter id for rfid");
             }
         }
 

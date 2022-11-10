@@ -50,8 +50,7 @@ namespace SWT_Assignment_2.Interfaces
 
         public void displayConenctPhone()
         {
-
-            Console.WriteLine("Connect your phone please!");
+            Writeline("Connect your phone please!");
         }
 
         public void updateDisplay()

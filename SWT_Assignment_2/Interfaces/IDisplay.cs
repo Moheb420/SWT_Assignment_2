@@ -16,7 +16,6 @@ namespace SWT_Assignment_2.Interfaces
         void displayStationMessage(string val);
         void displayChargingMessage(string val);
         void displayConenctPhone();
-
         void updateDisplay();
     }
 }

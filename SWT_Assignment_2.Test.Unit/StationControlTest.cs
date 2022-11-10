@@ -19,14 +19,12 @@ namespace SWT_Assignment_2.Test.Unit
         private IRFiDReader fakeRFiDReader;
         private ILogFile fakeLogfile_;
         private IUsbCharger fakeusbCharger_;
-        private Display display;
         private StationControl _uut;
 
 
         [SetUp]
         public void Setup()
         {
-            display = new Display();
             fakeCharger_ = Substitute.For<IChargeControl>();
             fakeDoor_ = Substitute.For<IDoor>();
             fakeDisplay_ = Substitute.For<IDisplay>();
@@ -40,21 +38,21 @@ namespace SWT_Assignment_2.Test.Unit
         public void InDoorOpen_DisplayFunctionCalled()
         {
             fakeDoor_.DoorEvent_ += Raise.EventWith<DoorEventArg>(new DoorEventArg { DoorOpen = true });
-            display.displayStationMessage("Dør åbnet");
-            Assert.AreEqual(display.stationMessage, "Dør åbnet");
+            fakeDisplay_.Received(1).displayConenctPhone();
         }
 
 
         [Test]
         public void OnDoorClose_DisplayFunctionCalled()
         {
+
+            //fakeDoor_.DoorEvent_ += Raise.EventWith<DoorEventArg>(new DoorEventArg { DoorOpen = true });
             fakeDoor_.DoorEvent_ += Raise.EventWith<DoorEventArg>(new DoorEventArg { DoorOpen = false });
-            display.displayStationMessage("Dør lukket");
-            Assert.AreEqual(display.stationMessage, "Dør lukket");
+            fakeDisplay_.Received(1).displayStationMessage("Døren er lukket");
         }
 
         [TestCase(123)]
-        [TestCase(0)]
+        [TestCase(1)]
         [TestCase(int.MinValue)]
         [TestCase(int.MaxValue)]
 
@@ -63,11 +61,11 @@ namespace SWT_Assignment_2.Test.Unit
 
             fakeCharger_.IsConnected().Returns(true);
             fakeRFiDReader.RfidDetectEvent += Raise.EventWith<RfidDetectEvent>(new RfidDetectEvent { RfId = num });
-            Assert.AreEqual(true, fakeCharger_.IsConnected());
-            fakeCharger_.StartUSBCharge();
-            fakeCharger_.StopUSBCharge();
+            fakeCharger_.Received().IsConnected();
+            fakeDoor_.Received().LockDoor();
+            fakeCharger_.Received().StartUSBCharge();
             fakeLogfile_.log($"Skab låst med RFID: {num}");
-            fakeDisplay_.displayStationMessage("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.");
+            fakeDisplay_.Received().Writeline("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.");
         }
 
         [Test]
@@ -116,7 +114,7 @@ namespace SWT_Assignment_2.Test.Unit
         [TestCase(int.MinValue)]
         [TestCase(int.MaxValue)]
 
-        public void InDoorOpen_DisplayFunctionCalled(int num)
+        public void RfidDetected(int num)
         {
 
             fakeCharger_.IsConnected().Returns(true);

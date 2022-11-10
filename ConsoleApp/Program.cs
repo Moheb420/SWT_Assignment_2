@@ -38,6 +38,7 @@ class Program
                 case 'C':
                     door.OnDoorClose();
                     break;
+
                 case 'U':
                     usbChargerSimulator.SimulateConnected(usbChargerSimulator.Connected);
                     display.displayChargingMessage("USB is connecting : " + usbChargerSimulator.Connected);
@@ -47,8 +48,7 @@ class Program
                     display.displayProgramMessage("Indtast RFID id: ");
                     string idString = System.Console.ReadLine();
                     int id = Convert.ToInt32(idString);
-                    rfidReader.OnRfidRead(id);
-                    //stationControl.RfidDetected(id);
+                    stationControl.RfidDetected(id);
                     break;
 
                 default:

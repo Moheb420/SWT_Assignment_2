@@ -9,7 +9,7 @@ class Program
     {
         // Assemble your system here from all the classes
         IDoor door = new Door();
-      
+
         IDisplay display = new Display();
         IRFiDReader rfidReader = new RfidReader();
         UsbChargerSimulator usbChargerSimulator = new UsbChargerSimulator();
@@ -20,7 +20,7 @@ class Program
         do
         {
             string input;
-            
+
             display.displayProgramMessage("Indtast E, O, C, U, R: ");
             input = Console.ReadLine();
             if (string.IsNullOrEmpty(input)) continue;
@@ -38,16 +38,16 @@ class Program
                 case 'C':
                     door.OnDoorClose();
                     break;
+
                 case 'U':
                     usbChargerSimulator.SimulateConnected(usbChargerSimulator.Connected);
-                   display.displayChargingMessage("USB is connecting : " + usbChargerSimulator.Connected);
+                    display.displayChargingMessage("USB is connecting : " + usbChargerSimulator.Connected);
                     break;
 
                 case 'R':
                     display.displayProgramMessage("Indtast RFID id: ");
                     string idString = System.Console.ReadLine();
                     int id = Convert.ToInt32(idString);
-                    //rfidReader.OnRfidRead(id);
                     stationControl.RfidDetected(id);
                     break;
 
@@ -61,6 +61,6 @@ class Program
     private static StationControl newStationControl(IDoor door, IRFiDReader rFiDReader, IDisplay display,
         IUsbCharger usbCharger)
     {
-        return new StationControl(new ChargeControl(usbCharger, display), display, new LogFile(), rFiDReader, door,usbCharger);
+        return new StationControl(new ChargeControl(usbCharger, display), display, new LogFile(), rFiDReader, door, usbCharger);
     }
 }
