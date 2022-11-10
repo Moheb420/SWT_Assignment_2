@@ -61,6 +61,19 @@ namespace Ladeskab
                 display_.Writeline("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.");
                 _state = LadeskabState.Locked;
             }
+
+            if (e.RfId == _oldId)
+            {
+                _charger.StopUSBCharge();
+                _door.UnlockDoor();
+                using (var writer = File.AppendText(logFile))
+                {
+                    logfile_.log(logFile);
+                    logfile_.log($"Skab låst op med RFID: {0} {e.RfId}");
+                }
+
+                display_.Writeline("Tag din telefon ud af skabet og luk døren");
+            }
         }
 
         private void HandleDoor(object? sender, DoorEventArg e)
@@ -112,6 +125,7 @@ namespace Ladeskab
 
                 case LadeskabState.DoorOpen:
                     // Ignore
+
                     break;
 
                 case LadeskabState.Locked:

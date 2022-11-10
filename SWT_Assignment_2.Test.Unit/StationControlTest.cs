@@ -75,8 +75,7 @@ namespace SWT_Assignment_2.Test.Unit
             int id = 32;
             fakeCharger_.IsConnected().Returns(false);
             fakeDoor_.DoorEvent_ += Raise.EventWith<DoorEventArg>(new DoorEventArg { DoorOpen = true });
-            fakeDisplay_.displayStationMessage("Dør åbnet");
-            fakeDoor_.DoorEvent_ += Raise.EventWith<DoorEventArg>(new DoorEventArg { DoorOpen = true });
+            fakeDisplay_.Received().displayStationMessage("Dør åbnet");
             fakeRFiDReader.RfidDetectEvent += Raise.EventWith<RfidDetectEvent>(new RfidDetectEvent { RfId = id });
             fakeDisplay_.displayStationMessage(Arg.Any<string>());
         }
