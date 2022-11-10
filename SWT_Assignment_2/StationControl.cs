@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using NUnit.Framework;
 using SWT_Assignment_2;
 using SWT_Assignment_2.Interfaces;
 using UsbSimulator;
@@ -66,13 +67,15 @@ namespace Ladeskab
             {
                 _charger.StopUSBCharge();
                 _door.UnlockDoor();
-                using (var writer = File.AppendText(logFile))
-                {
-                    logfile_.log(logFile);
-                    logfile_.log($"Skab låst op med RFID: {0} {e.RfId}");
-                }
+                logfile_.log($"Skab låst op med RFID: {e.RfId}");
 
-                display_.Writeline("Tag din telefon ud af skabet og luk døren");
+                display_.displayStationMessage("Tag din telefon ud af skabet og luk døren");
+            }
+
+            if (!_charger.IsConnected())
+            {
+                display_.displayStationMessage("Din telefon er ikke ordentlig tilsluttet. Prøv igen.");
+
             }
         }
 
@@ -124,8 +127,7 @@ namespace Ladeskab
                     break;
 
                 case LadeskabState.DoorOpen:
-                    display_.displayStationMessage("Dør åbnet"); 
-
+                   
                     break;
 
                 case LadeskabState.Locked:
@@ -134,11 +136,7 @@ namespace Ladeskab
                     {
                         _charger.StopUSBCharge();
                         _door.UnlockDoor();
-                        using (var writer = File.AppendText(logFile))
-                        {
-                            logfile_.log(logFile);
-                            writer.WriteLine(DateTime.Now + ": Skab låst op med RFID: {0}", id);
-                        }
+                        logfile_.log($"Skab låst op med RFID: {id}");
 
                         display_.Writeline("Tag din telefon ud af skabet og luk døren");
                         _state = LadeskabState.Available;
