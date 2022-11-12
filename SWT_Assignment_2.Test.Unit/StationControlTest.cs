@@ -44,8 +44,7 @@ namespace SWT_Assignment_2.Test.Unit
         [Test]
         public void OnDoorClose_DisplayFunctionCalled()
         {
-
-            //fakeDoor_.DoorEvent_ += Raise.EventWith<DoorEventArg>(new DoorEventArg { DoorOpen = true });
+            
             fakeDoor_.DoorEvent_ += Raise.EventWith<DoorEventArg>(new DoorEventArg { DoorOpen = false });
             fakeDisplay_.Received(1).displayStationMessage("Døren er lukket");
         }
@@ -80,13 +79,23 @@ namespace SWT_Assignment_2.Test.Unit
         }
 
         [Test]
-
         public void RfidDetectTelefonNotConnected()
         {
             int id = 32;
             fakeCharger_.IsConnected().Returns(false);
             fakeRFiDReader.RfidDetectEvent += Raise.EventWith<RfidDetectEvent>(new RfidDetectEvent { RfId = id });
             fakeDisplay_.Received().displayStationMessage("Din telefon er ikke ordentlig tilsluttet. Prøv igen.");
+        }
+
+
+        [TestCase(2)]
+
+        public void IgnoreDoorOpen(int id)
+        {
+            _uut._state = StationControl.LadeskabState.DoorOpen;
+            fakeRFiDReader.RfidDetectEvent += Raise.EventWith<RfidDetectEvent>(new RfidDetectEvent { RfId = id });
+            Assert.AreEqual(StationControl.LadeskabState.DoorOpen, _uut._state);
+            fakeDisplay_.DidNotReceive().displayStationMessage("Ignore");
         }
 
 
@@ -103,11 +112,11 @@ namespace SWT_Assignment_2.Test.Unit
             fakeRFiDReader.RfidDetectEvent += Raise.EventWith<RfidDetectEvent>(new RfidDetectEvent { RfId = num });
             fakeCharger_.Received().StartUSBCharge();
             fakeDoor_.Received().UnlockDoor();
-            fakeLogfile_. Received().log($"Skab låst op med RFID: {num}");
+            fakeLogfile_.Received().log($"Skab låst op med RFID: {num}");
             fakeDisplay_.Received().displayStationMessage("Tag din telefon ud af skabet og luk døren");
         }
 
-      
+
         [TestCase(44, 18)]
         [TestCase(-2, 22)]
 
@@ -122,5 +131,55 @@ namespace SWT_Assignment_2.Test.Unit
             fakeDisplay_.Received().displayStationMessage("Forkert RFID tag");
 
         }
+
+
+        [TestCase(1)]
+
+        public void RfidDetectLockDoor(int id)
+        {
+            fakeCharger_.IsConnected().Returns(true);
+            fakeRFiDReader.RfidDetectEvent += Raise.EventWith<RfidDetectEvent>(new RfidDetectEvent { RfId = id });
+
+            fakeCharger_.Received().IsConnected();
+            fakeDoor_.Received().LockDoor();
+            fakeCharger_.Received().StartUSBCharge();
+            fakeLogfile_.log($"Skab låst med RFID: {id}");
+            fakeDisplay_.Received().Writeline("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.");
+            Assert.AreEqual(StationControl.LadeskabState.Locked, _uut._state);
+        }
+
+        [TestCase(1)]
+        public void RfidDetectChargerNotConnected_(int id)
+        {
+            fakeCharger_.IsConnected().Returns(false);
+            fakeRFiDReader.RfidDetectEvent += Raise.EventWith<RfidDetectEvent>(new RfidDetectEvent { RfId = id });
+            fakeCharger_.Received().IsConnected();
+            fakeDisplay_.Received().displayStationMessage("Din telefon er ikke ordentlig tilsluttet. Prøv igen.");
+        }
+
+
+        [TestCase(3, 4)]
+        public void RfidDetectWrongTag(int id, int id2)
+        {
+            _uut._state = StationControl.LadeskabState.Locked;
+            fakeRFiDReader.RfidDetectEvent += Raise.EventWith<RfidDetectEvent>(new RfidDetectEvent { RfId = id });
+            fakeRFiDReader.RfidDetectEvent += Raise.EventWith<RfidDetectEvent>(new RfidDetectEvent { RfId = id2 });
+            fakeDisplay_.Received().displayStationMessage("Forkert RFID tag");
+        }
+
+        [TestCase(3)]
+        public void RfidDetectwithTheSameID(int num)
+        {
+
+            fakeCharger_.IsConnected().Returns(true);
+            fakeRFiDReader.RfidDetectEvent += Raise.EventWith<RfidDetectEvent>(new RfidDetectEvent { RfId = num });
+            fakeRFiDReader.RfidDetectEvent += Raise.EventWith<RfidDetectEvent>(new RfidDetectEvent { RfId = num });
+            fakeCharger_.Received().StartUSBCharge();
+            fakeDoor_.Received().UnlockDoor();
+            fakeLogfile_.Received().log($"Skab låst op med RFID: {num}");
+            fakeDisplay_.Received().displayStationMessage("Tag din telefon ud af skabet og luk døren");
+
+        }
+
     }
 }

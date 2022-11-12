@@ -14,7 +14,7 @@ class Program
         IRFiDReader rfidReader = new RfidReader();
         UsbChargerSimulator usbChargerSimulator = new UsbChargerSimulator();
 
-        StationControl stationControl = newStationControl(door, rfidReader, display, usbChargerSimulator);
+        //StationControl stationControl = newStationControl(door, rfidReader, display, usbChargerSimulator);
 
         bool finish = false;
         do
@@ -48,7 +48,7 @@ class Program
                     display.displayProgramMessage("Indtast RFID id: ");
                     string idString = System.Console.ReadLine();
                     int id = Convert.ToInt32(idString);
-                    stationControl.RfidDetected(id);
+                    //stationControl.RfidDetected(id);
                     break;
 
                 default:
@@ -58,9 +58,9 @@ class Program
         } while (!finish);
     }
 
-    private static StationControl newStationControl(IDoor door, IRFiDReader rFiDReader, IDisplay display,
-        IUsbCharger usbCharger)
-    {
-        return new StationControl(new ChargeControl(usbCharger, display), display, new LogFile(), rFiDReader, door);
-    }
+    //private static StationControl newStationControl(IDoor door, IRFiDReader rFiDReader, IDisplay display,
+    //    IUsbCharger usbCharger)
+    //{
+    //    return new StationControl(new ChargeControl(usbCharger, display), display, new LogFile(), rFiDReader, door);
+    //}
 }

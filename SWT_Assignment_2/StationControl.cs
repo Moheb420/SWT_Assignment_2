@@ -15,7 +15,7 @@ namespace Ladeskab
     public class StationControl
     {
         // Enum med tilstande ("states") svarende til tilstandsdiagrammet for klassen
-        private enum LadeskabState
+        public enum LadeskabState
         {
             Available,
             Locked,
@@ -23,7 +23,7 @@ namespace Ladeskab
         };
 
         // Her mangler flere member variable
-        private LadeskabState _state;
+        public LadeskabState _state;
         private IChargeControl _charger;
         private IUsbCharger usbCharger;
         private int _oldId;
@@ -48,36 +48,11 @@ namespace Ladeskab
 
         private void HandleRfid(object? sender, RfidDetectEvent e)
         {
-            if (_charger.IsConnected())
-            {
-
-                _door.LockDoor();
-                _charger.StartUSBCharge();
-                _oldId = e.RfId;
-
-                logfile_.log($"Skab låst med RFID: {e.RfId}");
-                display_.Writeline("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.");
-                //_state = LadeskabState.Locked;
-            }
-
-
-            if (e.RfId == _oldId)
-            {
-                _charger.StopUSBCharge();
-                _door.UnlockDoor();
-                logfile_.log($"Skab låst op med RFID: {e.RfId}");
-
-                display_.displayStationMessage("Tag din telefon ud af skabet og luk døren");
-            }
-
-           if (!_charger.IsConnected())
-            {
-                display_.displayStationMessage("Din telefon er ikke ordentlig tilsluttet. Prøv igen.");
-
-            }
-           else
-               display_.displayStationMessage("Forkert RFID tag");
+           RfidDetected(e.RfId);
         }
+
+         
+         
 
         private void HandleDoor(object? sender, DoorEventArg e)
         {
@@ -119,13 +94,13 @@ namespace Ladeskab
                     }
                     else
                     {
-                        display_.Writeline("Din telefon er ikke ordentlig tilsluttet. Prøv igen.");
+                        display_.displayStationMessage("Din telefon er ikke ordentlig tilsluttet. Prøv igen.");
                     }
 
                     break;
 
                 case LadeskabState.DoorOpen:
-                   
+                   // ignore
                     break;
 
                 case LadeskabState.Locked:
@@ -136,7 +111,7 @@ namespace Ladeskab
                         _door.UnlockDoor();
                         logfile_.log($"Skab låst op med RFID: {id}");
 
-                        display_.Writeline("Tag din telefon ud af skabet og luk døren");
+                        display_.displayStationMessage("Tag din telefon ud af skabet og luk døren");
                         _state = LadeskabState.Available;
                     }
                     else
