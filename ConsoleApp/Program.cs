@@ -58,7 +58,7 @@ class Program
         } while (!finish);
     }
 
-    private static StationControl newStationControl(IDoor door, IRFiDReader rFiDReader, IDisplay display,
+    public static StationControl newStationControl(IDoor door, IRFiDReader rFiDReader, IDisplay display,
        IUsbCharger usbCharger )
     {
         return new StationControl(new ChargeControl(usbCharger, display), display, new LogFile(), rFiDReader, door,usbCharger);
