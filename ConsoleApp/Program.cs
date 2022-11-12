@@ -5,9 +5,8 @@ using UsbSimulator;
 
 class Program
 {
-    static void Main(string[] args)
-    {
-        // Assemble your system here from all the classes
+    public static int Main() { 
+    // Assemble your system here from all the classes
         IDoor door = new Door();
 
         IDisplay display = new Display();
@@ -56,9 +55,11 @@ class Program
             }
 
         } while (!finish);
+
+        return 0;
     }
 
-    public static StationControl newStationControl(IDoor door, IRFiDReader rFiDReader, IDisplay display,
+    public static  StationControl newStationControl(IDoor door, IRFiDReader rFiDReader, IDisplay display,
        IUsbCharger usbCharger )
     {
         return new StationControl(new ChargeControl(usbCharger, display), display, new LogFile(), rFiDReader, door,usbCharger);
